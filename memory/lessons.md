@@ -25,3 +25,7 @@
 - **Context**: Modern web frameworks (like React or Angular) often intercept standard `input` value changes.
 - **Mistake**: Setting `element.value = newValue` directly doesn't always trigger the framework's internal state update. Also, using the wrong prototype (e.g., `HTMLInputElement` for a `textarea`) causes an "Illegal invocation" error.
 - **Correction**: Used the correct prototype (`HTMLInputElement` or `HTMLTextAreaElement`) to access the native `value` setter and dispatched `input`, `change`, and `blur` events. Also added support for `contenteditable` elements via `innerText`.
+
+## Comprehensive Memory Sync
+- **Mistake**: Responding to an instruction-only turn by only updating `tasks.md` and `progress.md`.
+- **Lesson**: The mandatory memory-first workflow explicitly requires updating `tasks.md`, `progress.md`, AND `lessons.md`. Even meta-tasks or acknowledgments should be fully documented to maintain the integrity of the memory system.
