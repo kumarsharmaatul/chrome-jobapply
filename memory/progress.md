@@ -15,3 +15,5 @@
 - Enhanced field matching synonyms and context detection.
 - Improved autofill reliability using native property setters and additional events.
 - Added manual confirmation flow in popup UI.
+- Fixed options page module import error by using absolute paths.
+- Added robust error handling and UUID fallback to options page.

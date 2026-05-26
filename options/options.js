@@ -1,17 +1,22 @@
-import { parseResumeFile } from '../parsers/resume-parser.js';
+import { parseResumeFile } from '/parsers/resume-parser.js';
 
 const fields = ["fullName","email","phone","address","linkedIn","github","portfolio","skills","education","experience","currentCompany","jobTitles","certifications","expectedSalary","noticePeriod","preferredLocation","coverLetterTemplate"];
 let profiles = [];
 let selectedId = null;
 
 async function load() {
-  const data = await chrome.storage.local.get(["profiles", "activeProfileId", "activityLogs", "theme"]);
-  profiles = data.profiles || [];
-  selectedId = data.activeProfileId || profiles[0]?.id || null;
-  document.body.classList.toggle('light', data.theme === 'light');
-  renderProfiles();
-  renderForm();
-  renderLogs(data.activityLogs || []);
+  try {
+    const data = await chrome.storage.local.get(["profiles", "activeProfileId", "activityLogs", "theme"]);
+    profiles = data.profiles || [];
+    selectedId = data.activeProfileId || profiles[0]?.id || null;
+    document.body.classList.toggle('light', data.theme === 'light');
+    renderProfiles();
+    renderForm();
+    renderLogs(data.activityLogs || []);
+  } catch (err) {
+    console.error('Failed to load profiles:', err);
+    alert('Failed to load profiles: ' + err.message);
+  }
 }
 
 function renderProfiles(){
@@ -38,13 +43,19 @@ document.getElementById('saveBtn').addEventListener('click',async()=>{
 });
 
 document.getElementById('parseBtn').addEventListener('click',async()=>{
-  const file=document.getElementById('resumeFile').files[0]; if(!file) return alert('Choose a file');
-  const label=document.getElementById('profileLabel').value.trim()||file.name;
-  const { parsed, rawText } = await parseResumeFile(file);
-  const profile={id:crypto.randomUUID(),label,rawText,createdAt:new Date().toISOString(),...parsed};
-  profiles.push(profile); selectedId=profile.id;
-  await saveAll(); await chrome.storage.local.set({activeProfileId:selectedId});
-  await load();
+  try {
+    const file=document.getElementById('resumeFile').files[0]; if(!file) return alert('Choose a file');
+    const label=document.getElementById('profileLabel').value.trim()||file.name;
+    const { parsed, rawText } = await parseResumeFile(file);
+    const id = (typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const profile={id,label,rawText,createdAt:new Date().toISOString(),...parsed};
+    profiles.push(profile); selectedId=profile.id;
+    await saveAll(); await chrome.storage.local.set({activeProfileId:selectedId});
+    await load();
+  } catch (err) {
+    console.error('Parsing failed:', err);
+    alert('Failed to parse resume: ' + err.message);
+  }
 });
 
 document.getElementById('themeToggle').addEventListener('click',async()=>{
@@ -57,9 +68,14 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
 });
 
 document.getElementById('importFile').addEventListener('change',async(e)=>{
-  const f=e.target.files[0]; if(!f) return;
-  const incoming=JSON.parse(await f.text()); if(!Array.isArray(incoming)) return;
-  profiles=incoming; selectedId=profiles[0]?.id||null; await saveAll(); await load();
+  try {
+    const f=e.target.files[0]; if(!f) return;
+    const incoming=JSON.parse(await f.text()); if(!Array.isArray(incoming)) return;
+    profiles=incoming; selectedId=profiles[0]?.id||null; await saveAll(); await load();
+  } catch (err) {
+    console.error('Import failed:', err);
+    alert('Import failed: ' + err.message);
+  }
 });
 
 load();
