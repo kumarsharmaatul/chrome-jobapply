@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset='utf-8'><title>AI Job Auto Filler - Profiles</title><link rel='stylesheet' href='options.css'></head>
+<body>
+<header><h1>AI Job Auto Filler</h1><button id='themeToggle'>Toggle Theme</button></header>
+<section>
+  <h2>Upload CV</h2>
+  <input type='file' id='resumeFile' accept='.pdf,.docx,.txt'/>
+  <input id='profileLabel' placeholder='Profile name (e.g., Backend Resume)'>
+  <button id='parseBtn'>Parse & Save Profile</button>
+</section>
+<section>
+  <h2>Profile Editor</h2>
+  <select id='profiles'></select>
+  <div id='profileForm'></div>
+  <button id='saveBtn'>Save Changes</button>
+  <button id='exportBtn'>Export</button>
+  <input type='file' id='importFile' accept='.json'>
+</section>
+<section>
+  <h2>Activity Logs</h2>
+  <pre id='logs'></pre>
+</section>
+<script type='module' src='options.js'></script>
+</body></html>
