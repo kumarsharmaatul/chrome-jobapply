@@ -1,0 +1,4 @@
+:root{--bg:#121212;--fg:#ececec;--card:#1e1e1e}body.light{--bg:#fafafa;--fg:#111;--card:#fff}
+body{font-family:system-ui;background:var(--bg);color:var(--fg);margin:0;padding:16px}section{background:var(--card);padding:12px;border-radius:10px;margin-bottom:12px}
+input,select,textarea,button{width:100%;margin:4px 0;padding:8px}header{display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}

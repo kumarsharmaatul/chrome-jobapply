@@ -1,0 +1,6 @@
+body{font-family:system-ui;padding:12px;min-width:320px;background:#111;color:#eee}
+button,select{width:100%;margin:6px 0;padding:8px}
+#result{font-size:12px;opacity:.95}
+#preview{font-size:11px;max-height:140px;overflow:auto;padding-left:18px}
+.hint{font-size:11px;opacity:.7}
+@media (prefers-color-scheme: light){body{background:#fff;color:#111}}

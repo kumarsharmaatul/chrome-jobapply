@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "AI Job Auto Filler",
+  "description": "Privacy-first resume-driven job application form autofill assistant.",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "AI Job Auto Filler"
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "run_autofill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Run autofill on the current page"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "utils/logger.js",
+        "utils/field-matcher.js",
+        "adapters/base-adapter.js",
+        "adapters/linkedin-adapter.js",
+        "adapters/indeed-adapter.js",
+        "adapters/naukri-adapter.js",
+        "adapters/wellfound-adapter.js",
+        "adapters/greenhouse-adapter.js",
+        "adapters/lever-adapter.js",
+        "content/content-script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
