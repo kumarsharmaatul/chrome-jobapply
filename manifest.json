@@ -44,7 +44,8 @@
         "adapters/lever-adapter.js",
         "content/content-script.js"
       ],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "all_frames": true
     }
   ]
 }
