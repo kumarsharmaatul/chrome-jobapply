@@ -44,10 +44,10 @@
   }
 
   function collectAllFields(root) {
-    const base = [...root.querySelectorAll("input, textarea, select")];
+    const base = [...root.querySelectorAll("input, textarea, select, [contenteditable='true']")];
     const shadowHosts = [...root.querySelectorAll("*")].filter((el) => el.shadowRoot);
     for (const host of shadowHosts) {
-      base.push(...host.shadowRoot.querySelectorAll("input, textarea, select"));
+      base.push(...host.shadowRoot.querySelectorAll("input, textarea, select, [contenteditable='true']"));
     }
     return base;
   }
@@ -64,21 +64,30 @@
 
   function fillField(el, value) {
     try {
+      el.focus();
       if (el.type === "checkbox" || el.type === "radio") {
         el.checked = /yes|true|1/i.test(String(value));
       } else if (el.tagName === "SELECT") {
-        const option = [...el.options].find((o) => o.text.toLowerCase().includes(String(value).toLowerCase()));
+        const option = [...el.options].find((o) => o.text.toLowerCase().includes(String(value).toLowerCase()) || o.value.toLowerCase() === String(value).toLowerCase());
         if (option) {
           el.value = option.value;
         } else {
           return false;
         }
+      } else if (el.getAttribute("contenteditable") === "true") {
+        el.innerText = value;
       } else {
-        el.focus();
-        el.value = value;
+        const prototype = el.tagName === "TEXTAREA" ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(prototype, "value")?.set;
+        if (nativeInputValueSetter) {
+          nativeInputValueSetter.call(el, value);
+        } else {
+          el.value = value;
+        }
       }
       el.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
       el.dispatchEvent(new Event("change", { bubbles: true, composed: true }));
+      el.dispatchEvent(new Event("blur", { bubbles: true, composed: true }));
       return true;
     } catch (error) {
       window.AIAFLogger?.warn("Field fill failed", { error: String(error) });

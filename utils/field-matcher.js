@@ -1,18 +1,22 @@
 (() => {
   const synonyms = {
-    fullName: ["full name", "name", "candidate name", "first name", "last name"],
-    email: ["email", "email address"],
-    phone: ["phone", "mobile", "mobile number", "contact number", "telephone"],
-    address: ["address", "current location", "city", "state"],
-    linkedIn: ["linkedin", "linkedin profile"],
-    github: ["github", "github profile"],
-    portfolio: ["portfolio", "website", "personal site", "portfolio url"],
-    expectedSalary: ["salary", "ctc", "expected ctc", "current ctc", "compensation"],
-    noticePeriod: ["notice", "notice period", "joining"],
-    experience: ["experience", "years of experience", "total experience"],
-    skills: ["skills", "key skills", "tech stack", "competencies"],
-    preferredLocation: ["preferred location", "location preference", "desired location"],
-    coverLetterTemplate: ["cover letter", "motivation", "why are you a fit"]
+    fullName: ["full name", "name", "candidate name", "first name", "last name", "given name", "family name"],
+    email: ["email", "email address", "e-mail"],
+    phone: ["phone", "mobile", "mobile number", "contact number", "telephone", "cell phone"],
+    address: ["address", "current location", "city", "state", "postal code", "zip code", "country", "street"],
+    linkedIn: ["linkedin", "linkedin profile", "linkedin url"],
+    github: ["github", "github profile", "github url"],
+    portfolio: ["portfolio", "website", "personal site", "portfolio url", "personal url"],
+    expectedSalary: ["salary", "ctc", "expected ctc", "current ctc", "compensation", "remuneration"],
+    noticePeriod: ["notice", "notice period", "joining", "availability", "how soon"],
+    experience: ["experience", "years of experience", "total experience", "work history"],
+    skills: ["skills", "key skills", "tech stack", "competencies", "expertise"],
+    preferredLocation: ["preferred location", "location preference", "desired location", "relocate"],
+    education: ["education", "qualification", "degree", "university", "college", "school"],
+    currentCompany: ["current company", "present company", "employer"],
+    jobTitles: ["job title", "designation", "role", "position"],
+    certifications: ["certification", "license", "certified"],
+    coverLetterTemplate: ["cover letter", "motivation", "why are you a fit", "personal statement"]
   };
 
   function getLabelText(el) {
@@ -28,7 +32,7 @@
   }
 
   function getDescriptor(el) {
-    const nearby = el.closest("div, section, form")?.innerText?.slice(0, 220) || "";
+    const nearby = el.closest("div, section, form, .form-group, .field-wrapper")?.innerText?.slice(0, 250) || "";
     return [describeField(el), nearby].filter(Boolean).join(" ").toLowerCase();
   }
 

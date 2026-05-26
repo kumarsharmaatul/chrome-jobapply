@@ -28,7 +28,15 @@
         preview.appendChild(li);
       });
       result.textContent = `Autofill complete: ${rows.length} fields filled.`;
+      if (rows.length > 0) {
+        document.getElementById('confirmationBox').style.display = 'block';
+      }
     }, 500);
+  };
+
+  document.getElementById('confirmBtn').onclick = () => {
+    document.getElementById('confirmationBox').style.display = 'none';
+    result.textContent = 'Ready for manual submission. Please click Apply on the job site.';
   };
 
   document.getElementById('openOptionsBtn').onclick = () => chrome.runtime.openOptionsPage();
