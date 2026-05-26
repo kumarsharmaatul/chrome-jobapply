@@ -6,6 +6,7 @@
 - [x] Re-synchronized memory and acknowledged mandatory workflow (2026-05-27)
 - [x] Fix autofill data filling issue
 - [x] Implement manual confirmation flow
+- [x] Fix options page module import and runtime errors
 - [ ] Add authentication
 - [ ] Setup API
 

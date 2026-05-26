@@ -29,3 +29,13 @@
 ## Comprehensive Memory Sync
 - **Mistake**: Responding to an instruction-only turn by only updating `tasks.md` and `progress.md`.
 - **Lesson**: The mandatory memory-first workflow explicitly requires updating `tasks.md`, `progress.md`, AND `lessons.md`. Even meta-tasks or acknowledgments should be fully documented to maintain the integrity of the memory system.
+
+## Chrome Extension Module Imports
+- **Context**: Importing modules in an options page or popup.
+- **Mistake**: Using relative paths like `../parsers/resume-parser.js` can sometimes fail depending on how the extension is loaded or the directory structure.
+- **Lesson**: Use absolute paths (e.g., `/parsers/resume-parser.js`) for more reliable module imports in Chrome Extensions.
+
+## Environmental Robustness
+- **Context**: Using `crypto.randomUUID()`.
+- **Mistake**: Assuming `crypto.randomUUID()` is always available. It requires a secure context (HTTPS or extension schemes), but some environments or older browsers might not support it.
+- **Lesson**: Always provide a fallback (like `Math.random()`) for modern browser APIs when working in varied environments.
