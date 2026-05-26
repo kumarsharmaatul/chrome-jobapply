@@ -1,5 +1,9 @@
 # Lessons Learned (Mistakes & Fixes)
 
+## Memory Synchronization Discipline
+- **Mistake**: Memory synchronization can be forgotten when the task appears to be "instruction-only".
+- **Lesson**: Treat instruction/coordination turns as real work chunks and still update `tasks.md`, `progress.md`, and `lessons.md` immediately.
+
 ## WebSocket Centralization
 - **Mistake**: Initially added WebSocket script only to `dashboard.html`.
 - **Lesson**: Trading bots need real-time data on multiple pages (Ledger, Portfolio). Always centralize WebSocket logic in `base.html` and use `data-instrument` attributes for generic updates.
