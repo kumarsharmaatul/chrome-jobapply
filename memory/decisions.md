@@ -1,12 +1,9 @@
 # Decisions Log
 
-## Decision Template
-
-### Date
-YYYY-MM-DD
+## 2026-05-26 — Memory synchronization applies to instruction-only turns
 
 ### Decision
-Describe decision
+Treat operational/instruction-only user turns as completed work chunks and update memory artifacts (`tasks.md`, `progress.md`, and `lessons.md`) immediately after those turns.
 
 ### Reason
-Why this decision was made
+This prevents memory drift and enforces the mandatory sync rule even when no feature code is changed.
